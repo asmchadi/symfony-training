@@ -1,0 +1,12 @@
+{% extends 'error.html.twig' %}
+{% block title %}404{% endblock %}
+{% block error %}
+    <div class="notfound-404">
+        <h1>{{ status_code }}</h1>
+    </div>
+    <h2>{{ status_text }}</h2>
+    <form class="notfound-search" action="{{ url('search') }}">
+        <input type="text" placeholder="Search..." name="q">
+        <button type="submit"><span></span></button>
+    </form>
+{% endblock %}

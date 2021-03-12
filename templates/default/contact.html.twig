@@ -1,0 +1,91 @@
+{% form_theme form _self %}
+{% extends 'base.html.twig' %}
+{% block title %}Contact us{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('default') }}">Home</a></li>
+                <li class="breadcrumb-item active">Contact</li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="contact">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <div class="form">
+                        {{ form_start(form) }}
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form_widget(form.name) }}
+                                {{ form_errors(form.name) }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form_widget(form.email) }}
+                                {{ form_errors(form.email) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.subject) }}
+                            {{ form_errors(form.subject) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.message) }}
+                            {{ form_errors(form.message) }}
+                        </div>
+                        <div>
+                            <button type="submit">Send Message</button>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="contact-info">
+                        <div class="section-header">
+                            <h3>Get in Touch</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In condimentum quam ac mi
+                                viverra dictum. In efficitur ipsum diam, at dignissim lorem tempor in. Vivamus tempor
+                                hendrerit finibus.
+                            </p>
+                        </div>
+                        <h4><i class="fa fa-map-marker"></i>123 E Shop, Los Angeles, CA, USA</h4>
+                        <h4><i class="fa fa-envelope"></i>email@example.com</h4>
+                        <h4><i class="fa fa-phone"></i>+123-456-7890</h4>
+                        <div class="social">
+                            <a href=""><i class="fa fa-twitter"></i></a>
+                            <a href=""><i class="fa fa-facebook"></i></a>
+                            <a href=""><i class="fa fa-linkedin"></i></a>
+                            <a href=""><i class="fa fa-instagram"></i></a>
+                            <a href=""><i class="fa fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block text_widget %}
+    <input type="text" id="{{ id }}" name="{{ full_name }}" class="form-control"
+           value="{{ value }}" {{ block('widget_attributes') }}/>
+{% endblock %}
+{% block textarea_widget %}
+    <textarea id="{{ id }}" name="{{ full_name }}"
+              class="form-control" {{ block('widget_attributes') }}>{{ value }}</textarea>
+{% endblock %}
+{% block email_widget %}
+    <input type="text" id="{{ id }}" name="{{ full_name }}" class="form-control"
+           value="{{ value }}" {{ block('widget_attributes') }}/>
+{% endblock %}
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        <div class="alert alert-danger">
+            {% for error in errors %}
+                <p>{{ error.message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

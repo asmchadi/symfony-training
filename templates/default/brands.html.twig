@@ -1,0 +1,8 @@
+<div class="sidebar-widget brands">
+    <h2 class="title">Our Brands</h2>
+    <ul>
+        {% for brand,nbr in brands %}
+        <li><a href="#">{{ brand }} </a><span>({{nbr}})</span></li>
+        {% endfor %}
+    </ul>
+</div>

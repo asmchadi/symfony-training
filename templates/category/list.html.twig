@@ -1,0 +1,10 @@
+<ul>
+    {% for category in categories %}
+        <li>
+            <a href="{{ url('category', {'slug': category.slug}) }}">
+                {{ category.label }}
+            </a>
+            <span>({{ category.products|length }})</span>
+        </li>
+    {% endfor %}
+</ul>

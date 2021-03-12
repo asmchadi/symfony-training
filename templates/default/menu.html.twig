@@ -1,0 +1,12 @@
+<div class="navbar-nav m-auto">
+    <a href="{{ url('default') }}" class="nav-item nav-link active">Home</a>
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
+        <div class="dropdown-menu">
+            {% for category in categories %}
+                <a href="{{ path('category', {'slug': category.slug}) }}" class="dropdown-item">{{ category.label }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <a href="{{ url('contactus') }}" class="nav-item nav-link">Contact Us</a>
+</div>

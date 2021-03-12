@@ -1,0 +1,103 @@
+{#{% form_theme form _self %} if you wish to apply theme from the current file #}
+{% form_theme form 'form/cart_theme.html.twig' %} {# when use an external theme #}
+{% extends 'base.html.twig' %}
+{% block title %}My cart{% endblock %}
+{% block breadcrumb %}
+<div class="breadcrumb-wrap">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('default') }}">Home</a></li>
+            <li class="breadcrumb-item active">Cart</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+{% block body %}
+    <div class="cart-page">
+        <div class="container">
+            {% if cart.orderLines|length > 0 %}
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Remove</th>
+                                </tr>
+                                </thead>
+                                <tbody class="align-middle">
+                                {% for item in form.orderLines %}
+                                    {{ form_row(item) }}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="coupon">
+                            <input type="text" placeholder="Coupon Code">
+                            <button>Apply Code</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cart-summary">
+                            <div class="cart-content">
+                                <h3>Cart Summary</h3>
+                                {#<p>Sub Total<span>$22</span></p>#}
+                                {#<p>Shipping Cost<span>$1</span></p>#}
+                                <h4>Grand Total<span>${{ cart.computeTotal | number_format(2, ',', ' ') }}</span></h4>
+                            </div>
+                            <div class="cart-btn">
+                                <button type="submit">Update Cart</button>
+                                <label>
+                                    <a href="{{ url('checkout') }}" class="cart-btn">Checkout</a>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    Your cart is empty. <a href="{{ url('default') }}">Start shopping</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    $(function () {
+        $('button.delete_row').on('click', function () {
+            var $object  = $(this).parents().eq(1);
+            $object.remove();
+        });
+    } ())
+</script>
+{% endblock %}
+{% block stylesheets %}
+<style type="text/css">
+    .cart-page .cart-summary .cart-btn label {
+        width: calc(50% - 15px);
+        padding: 11px;
+        text-align: center;
+        background: #3F69AA;
+        border: none;
+    }
+    .cart-page .cart-summary .cart-btn label a {
+        color: #ffffff;
+    }
+</style>
+{% endblock %}
+{% block form_errors %}
+{{ dump() }}
+{% endblock %}
