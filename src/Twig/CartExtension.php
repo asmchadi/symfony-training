@@ -13,7 +13,7 @@ use Twig\TwigFunction;
 
 class CartExtension extends AbstractExtension
 {
-    const LENGHT = 20;
+    const LENGTH = 20;
 
     public function getFunctions()
     {
@@ -26,7 +26,8 @@ class CartExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('minimize', [$this, 'minimizeString']),
+            new TwigFilter('minimize', [$this, 'minimizeProduct']),
+            new TwigFilter('minimizeLabel', [CartExtensionRuntime::class, 'minimizeString']),
         ];
     }
 
@@ -71,11 +72,12 @@ class CartExtension extends AbstractExtension
      *
      * @return string the resulting string
      */
-    public function minimizeString(Product $product): string
+    public function minimizeProduct(Product $product): string
     {
-        return \strlen($product->getLabel()) > 0 ? \sprintf(
-            '%s...',
-            \mb_substr($product->getLabel(), 0, self::LENGHT)
+        return \strlen($product->getLabel()) > self::LENGTH ?
+            \sprintf(
+                '%s...',
+                \mb_substr($product->getLabel(), 0, self::LENGTH)
         ) : $product->getLabel();
     }
 }
