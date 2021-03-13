@@ -53,7 +53,8 @@
                                 <h3>Cart Summary</h3>
                                 {#<p>Sub Total<span>$22</span></p>#}
                                 {#<p>Shipping Cost<span>$1</span></p>#}
-                                <h4>Grand Total<span>${{ cart.computeTotal | number_format(2, ',', ' ') }}</span></h4>
+                                {#<h4>Grand Total<span>${{ cart.computeTotal | number_format(2, ',', ' ') }}</span></h4>#}
+                                <h4>Grand Total<span>${{ totalCart(cart) }}</span></h4>
                             </div>
                             <div class="cart-btn">
                                 <button type="submit">Update Cart</button>

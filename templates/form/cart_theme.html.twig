@@ -7,13 +7,14 @@
                 <img src="{{ product.cover }}" alt="Image" width="83" height="100">
             </a>
         </td>
-        <td><a href="#">{{ product.label }}</a></td>
+        <td><a href="#">{{ product|minimize }}</a></td>
         <td>${{ product.unitPrice|number_format(2, ',', ' ') }}</td>
         <td>
             {{ form_widget(form) }}
             {{ form_errors(form) }}
         </td>
-        <td>${{ form.vars.value.computeTotal | number_format(2, ',', ' ') }}</td>
+{#        <td>${{ form.vars.value.computeTotal | number_format(2, ',', ' ') }}</td>#}
+        <td>${{ totalOrderLine(value) }}</td>
         <td>
             <button type="button" class="delete_row"><i class="fa fa-trash"></i></button>
         </td>
