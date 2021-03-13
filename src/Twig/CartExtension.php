@@ -15,6 +15,9 @@ class CartExtension extends AbstractExtension
 {
     const LENGTH = 20;
 
+    /**
+     * {@inheritDoc}
+     */
     public function getFunctions()
     {
         return [
@@ -23,6 +26,9 @@ class CartExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getFilters()
     {
         return [

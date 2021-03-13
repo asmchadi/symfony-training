@@ -3,20 +3,21 @@
 {% extends 'base.html.twig' %}
 {% block title %}My cart{% endblock %}
 {% block breadcrumb %}
-<div class="breadcrumb-wrap">
-    <div class="container">
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('default') }}">Home</a></li>
-            <li class="breadcrumb-item active">Cart</li>
-        </ul>
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('default') }}">Home</a></li>
+                <li class="breadcrumb-item active">Cart</li>
+            </ul>
+        </div>
     </div>
-</div>
 {% endblock %}
 {% block body %}
     <div class="cart-page">
         <div class="container">
             {% if cart.orderLines|length > 0 %}
                 {{ form_start(form) }}
+                {{ form_errors(form) }}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
@@ -76,29 +77,27 @@
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript">
-    $(function () {
-        $('button.delete_row').on('click', function () {
-            var $object  = $(this).parents().eq(1);
-            $object.remove();
-        });
-    } ())
-</script>
+    <script type="text/javascript">
+        $(function () {
+            $('button.delete_row').on('click', function () {
+                var $object = $(this).parents().eq(1);
+                $object.remove();
+            });
+        }())
+    </script>
 {% endblock %}
 {% block stylesheets %}
-<style type="text/css">
-    .cart-page .cart-summary .cart-btn label {
-        width: calc(50% - 15px);
-        padding: 11px;
-        text-align: center;
-        background: #3F69AA;
-        border: none;
-    }
-    .cart-page .cart-summary .cart-btn label a {
-        color: #ffffff;
-    }
-</style>
-{% endblock %}
-{% block form_errors %}
-{{ dump() }}
+    <style type="text/css">
+        .cart-page .cart-summary .cart-btn label {
+            width: calc(50% - 15px);
+            padding: 11px;
+            text-align: center;
+            background: #3F69AA;
+            border: none;
+        }
+
+        .cart-page .cart-summary .cart-btn label a {
+            color: #ffffff;
+        }
+    </style>
 {% endblock %}

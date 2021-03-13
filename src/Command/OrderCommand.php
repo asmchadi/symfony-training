@@ -40,6 +40,9 @@ class OrderCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function configure()
     {
         $this->setDescription('Manage orders')
@@ -71,7 +74,7 @@ class OrderCommand extends Command
     }
 
     /**
-     * @param InputInterface $in the input instance to get all options and arguments
+     * @param InputInterface  $in  the input instance to get all options and arguments
      * @param OutputInterface $out the output used to render styled render
      *
      * @return int exist status code
@@ -116,7 +119,7 @@ class OrderCommand extends Command
     /**
      * Use this to initialize fields if needed.
      *
-     * @param InputInterface $input the input instance to get all options and arguments
+     * @param InputInterface  $input  the input instance to get all options and arguments
      * @param OutputInterface $output the output used to render styled render
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -127,7 +130,7 @@ class OrderCommand extends Command
     /**
      * Use this to ask the user for further infos.
      *
-     * @param InputInterface $input the input instance to get all options and arguments
+     * @param InputInterface  $input  the input instance to get all options and arguments
      * @param OutputInterface $output the output used to render styled render
      */
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -149,7 +152,7 @@ class OrderCommand extends Command
      * returns all orders.
      *
      * @param SymfonyStyle $styler the symfony styler
-     * @param string|null $user the user name
+     * @param string|null  $user   the user name
      *
      * @throws NoOrdersException
      */
@@ -180,9 +183,9 @@ class OrderCommand extends Command
     }
 
     /**
-     * Describe
+     * Describe the given order.
      *
-     * @param int $id the order id
+     * @param int          $id     the order id
      * @param SymfonyStyle $styler the command styler
      *
      * @throws OrderNotFoundException
@@ -210,6 +213,14 @@ class OrderCommand extends Command
         $styler->table($headers, $rows);
     }
 
+    /**
+     * Updates the order status.
+     *
+     * @param int $id     Order id
+     * @param int $status Order status
+     *
+     * @throws OrderNotFoundException
+     */
     private function updateStatus(int $id, int $status)
     {
         /** @var Order|null $order */

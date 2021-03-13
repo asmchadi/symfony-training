@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Exception\CartNotValidException;
 use App\Form\CartType;
 use App\Form\CheckoutType;
 use App\Service\Cart;
@@ -55,7 +56,8 @@ class CartController extends AbstractController
      *
      * @return RedirectResponse the redirect response instance
      */
-    public function clear(SessionInterface $session) {
+    public function clear(SessionInterface $session)
+    {
         $session->clear();
 
         return $this->redirectToRoute('default', [], Response::HTTP_FOUND);
@@ -70,6 +72,8 @@ class CartController extends AbstractController
      * @param Request $request The request object
      *
      * @return Response the response instance
+     *
+     * @throws CartNotValidException
      */
     public function checkout(Cart $cart, Request $request): Response
     {
@@ -86,6 +90,8 @@ class CartController extends AbstractController
                 );
 
                 return $this->redirectToRoute('default', [], Response::HTTP_FOUND);
+            } else {
+                throw new CartNotValidException();
             }
         }
 

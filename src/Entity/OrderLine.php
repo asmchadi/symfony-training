@@ -7,6 +7,7 @@ namespace App\Entity;
 use App\Repository\OrderLineRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=OrderLineRepository::class)
@@ -93,5 +94,32 @@ class OrderLine
     public function computeTotal(): float
     {
         return $this->getQuantity() * $this->getProduct()->getUnitPrice();
+    }
+
+    /**
+     * Checks if the quantity has been exceeded.
+     *
+     * @return bool true if the quantity has been exceed. false if not
+     *
+     * @Assert\IsTrue(message="The quantity allowed has been  exceeded.")
+     */
+    public function isQuantityExceeded(): bool
+    {
+        return !($this->getQuantity() > $this->getProduct()->getQuantity());
+    }
+
+    /**
+     * @Assert\Callback()
+     *
+     * @param ExecutionContextInterface $context
+     * @param $payload
+     */
+    public function exceeded(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->getQuantity() > $this->getProduct()->getQuantity()) {
+            $context->buildViolation('The quantity has exceeded the max in the store')
+                ->atPath('quantity')
+                ->addViolation();
+        }
     }
 }

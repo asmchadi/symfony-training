@@ -20,6 +20,11 @@ class AppFixtures extends Fixture
         $this->faker = Factory::create();
     }
 
+    /**
+     * Performs the loading of fake data.
+     *
+     * @param ObjectManager $manager the object manager
+     */
     public function load(ObjectManager $manager)
     {
         $this->loadCategories($manager);
@@ -27,6 +32,11 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
+    /**
+     * Loads some dummy categories.
+     *
+     * @param ObjectManager $manager the object manager
+     */
     private function loadCategories(ObjectManager $manager)
     {
         for ($i = 1; $i <= self::NB_CATEGORIES; $i++) {
@@ -37,6 +47,11 @@ class AppFixtures extends Fixture
         }
     }
 
+    /**
+     * Loads some dummy products.
+     *
+     * @param ObjectManager $manager the object manager
+     */
     private function loadProducts(ObjectManager $manager)
     {
         for ($i = 1; $i <= self::NB_PRODUCTS; $i++) {

@@ -41,17 +41,22 @@
                                         {{ product.shortDescription }}
                                     </p>
                                 </div>
-                                {{ form_start(form) }}
-                                <div class="quantity">
-                                    <h4>Quantity:</h4>
-                                    {{ form_row(form.quantity) }}
-                                </div>
-                                <div class="action">
-                                    <button><i class="fa fa-cart-plus"></i></button>
-                                    <a href="#"><i class="fa fa-heart"></i></a>
-                                    <a href="#"><i class="fa fa-search"></i></a>
-                                </div>
-                                {{ form_end(form) }}
+                                {% if product.quantity > 0 %}
+                                    {{ form_start(form) }}
+                                    {{ form_errors(form) }}
+                                    <div class="quantity">
+                                        <h4>Quantity:</h4>
+                                        {{ form_row(form.quantity) }}
+                                    </div>
+                                    <div class="action">
+                                        <button><i class="fa fa-cart-plus"></i></button>
+                                        <a href="#"><i class="fa fa-heart"></i></a>
+                                        <a href="#"><i class="fa fa-search"></i></a>
+                                    </div>
+                                    {{ form_end(form) }}
+                                {% else %}
+                                    <label class="badge badge-danger">Out of store</label>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -244,9 +249,18 @@
 {% block _add_to_cart_quantity_errors %}
     {% if errors|length > 0 %}
         <div class="alert alert-danger">
-        {% for error in errors %}
-            <p>{{ error.message }}</p>
-        {% endfor %}
+            {% for error in errors %}
+                <p>{{ error.message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        <div class="alert alert-danger">
+            {% for error in errors %}
+                <p>{{ error.message }}</p>
+            {% endfor %}
         </div>
     {% endif %}
 {% endblock %}

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-
 use App\Entity\Order;
 use App\Model\Contact;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class Mailer
 {
@@ -64,6 +66,15 @@ class Mailer
         }
     }
 
+    /**
+     * Sends contact form response when user uses the form.
+     *
+     * @param Contact $form contact form
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function sendContactMail(Contact $form)
     {
         $message = (new \Swift_Message('New message from contact form'))

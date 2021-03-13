@@ -21,7 +21,7 @@ class ProductRepository extends ServiceEntityRepository
      *
      * @param Product $product the product
      *
-     * @return array the related products depending on the categories
+     * @return array<mixed> the related products depending on the categories
      *
      * @throws Exception
      * @throws \Doctrine\DBAL\Driver\Exception

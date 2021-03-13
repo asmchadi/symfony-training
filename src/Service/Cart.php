@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\Order;
 use App\Entity\OrderLine;
+use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -117,8 +118,7 @@ class Cart
         $cart = $this->getCart();
         $cart->setStatus(Order::ORDER_PLACED);
         foreach ($cart->getOrderLines() as $line) {
-            $line->setProduct($this->repository->find($line->getProduct()));
-            $this->manager->persist($line);
+           $this->manageQuantity($line);
         }
         $this->manager->persist($cart);
         $this->manager->flush();
@@ -131,6 +131,16 @@ class Cart
     }
 
     /**
+     * @required
+     *
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
+    }
+
+    /**
      * Clears the session.
      */
     private function clearCart()
@@ -139,12 +149,28 @@ class Cart
     }
 
     /**
-     * @required
+     * Deduct the ordered quantity from the product total quantity.
      *
-     * @param LoggerInterface $logger
+     * @param Product $product  the product instance
+     * @param int     $quantity the new quantity
      */
-    public function setLogger(LoggerInterface $logger): void
+    private function updateProductQuantity(Product $product, int $quantity)
     {
-        $this->logger = $logger;
+        $product->setQuantity($product->getQuantity() - $quantity);
+    }
+
+    /**
+     * Manages the quantity of the order line and the product.
+     *
+     * @param OrderLine $line the order line instance
+     */
+    private function manageQuantity(OrderLine $line)
+    {
+        /** @var Product $product */
+        $product = $this->repository->find($line->getProduct());
+        $line->setProduct($product);
+        $this->manager->persist($line);
+        $this->updateProductQuantity($product, $line->getQuantity());
+        $this->manager->persist($product);
     }
 }
