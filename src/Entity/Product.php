@@ -63,6 +63,11 @@ class Product
      */
     private $cover;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $shortDescription;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -199,6 +204,18 @@ class Product
     public function setCover(string $cover): self
     {
         $this->cover = $cover;
+
+        return $this;
+    }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function setShortDescription(string $shortDescription): self
+    {
+        $this->shortDescription = $shortDescription;
 
         return $this;
     }

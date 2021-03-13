@@ -45,7 +45,8 @@ class AppFixtures extends Fixture
             $product = new Product();
             $product->setLabel($this->faker->sentence(5))
                 ->setCover('https://picsum.photos/255/309')
-                ->setDescription($this->faker->paragraph(3))
+                ->setShortDescription($this->faker->paragraph(10))
+                ->setDescription('<p>'.\implode('</p><p>', $this->faker->paragraphs(10)).'</p>')
                 ->setUnitPrice($this->faker->randomFloat(2, 10, 150))
                 ->addCategory($category)
                 ->setQuantity(\mt_rand(0, 18));
