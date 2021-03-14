@@ -24,39 +24,47 @@
                             <div class="col-md-6">
                                 <label>First Name</label>
                                 {{ form_widget(shipping.firstName) }}
-                                {{ form_errors(shipping) }}
+                                {{ form_errors(shipping.firstName) }}
                             </div>
                             <div class="col-md-6">
                                 <label>Last Name</label>
                                 {{ form_widget(shipping.lastName) }}
+                                {{ form_errors(shipping.lastName) }}
                             </div>
                             <div class="col-md-6">
                                 <label>E-mail</label>
                                 {{ form_widget(shipping.email) }}
+                                {{ form_errors(shipping.email) }}
                             </div>
                             <div class="col-md-6">
                                 <label>Mobile No</label>
                                 {{ form_widget(shipping.mobileNo) }}
+                                {{ form_errors(shipping.mobileNo) }}
                             </div>
                             <div class="col-md-12">
                                 <label>Address</label>
                                 {{ form_widget(shipping.address) }}
+                                {{ form_errors(shipping.address) }}
                             </div>
                             <div class="col-md-6">
                                 <label>City</label>
                                 {{ form_widget(shipping.city) }}
+                                {{ form_errors(shipping.city) }}
                             </div>
                             <div class="col-md-6">
                                 <label>State</label>
                                 {{ form_widget(shipping.state) }}
+                                {{ form_errors(shipping.state) }}
                             </div>
                             <div class="col-md-6">
                                 <label>ZIP Code</label>
                                 {{ form_widget(shipping.postalCode) }}
+                                {{ form_errors(shipping.postalCode) }}
                             </div>
                             <div class="col-md-12">
                                 <label>Country</label>
                                 {{ form_widget(shipping.country) }}
+                                {{ form_errors(shipping.country) }}
                             </div>
                             <div class="col-md-12">
                                 <div class="custom-control">
@@ -73,7 +81,8 @@
                         <div class="checkout-content">
                             <h3>Products</h3>
                             {% for item in cart.cart.orderLines %}
-                            <p>{{ item.product.label }}<span>${{ item.product.unitPrice|number_format(2, ',', ' ') }}</span></p>
+                                <p>{{ item.product.label }}
+                                    <span>${{ item.product.unitPrice|number_format(2, ',', ' ') }}</span></p>
                             {% endfor %}
                             <h4>Grand Total<span>${{ cart.cart.computeTotal|number_format(2, ',', ' ') }}</span></h4>
                         </div>
@@ -119,7 +128,6 @@
         <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain) }}</option>
     {% endfor %}
 {% endblock %}
-
 {%- block choice_widget_expanded -%}
     <div {{ block('widget_container_attributes') }}>
         {%- for child in form %}
@@ -132,3 +140,12 @@
         {% endfor -%}
     </div>
 {%- endblock choice_widget_expanded -%}
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        <div class="alert alert-danger mt-0 ">
+            {% for error in errors %}
+                <p class=" p-0">{{ error.message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

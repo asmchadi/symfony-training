@@ -15,7 +15,11 @@
 {% block body %}
     <div class="cart-page">
         <div class="container">
-            {% if cart.orderLines|length > 0 %}
+            {% if cart is null or cart.orderLines|length == 0 %}
+                <div class="alert alert-warning" role="alert">
+                    Your cart is empty. <a href="{{ url('default') }}">Start shopping</a>
+                </div>
+            {% else %}
                 {{ form_start(form) }}
                 {{ form_errors(form) }}
                 <div class="row">
@@ -67,10 +71,6 @@
                     </div>
                 </div>
                 {{ form_end(form) }}
-            {% else %}
-                <div class="alert alert-warning" role="alert">
-                    Your cart is empty. <a href="{{ url('default') }}">Start shopping</a>
-                </div>
             {% endif %}
         </div>
     </div>

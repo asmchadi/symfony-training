@@ -78,6 +78,9 @@ class CartController extends AbstractController
     public function checkout(Cart $cart, Request $request): Response
     {
         $checkout = $cart->getCart();
+        if (null === $checkout) {
+            throw $this->createNotFoundException('No cart was set.');
+        }
         $form = $this->createForm(CheckoutType::class, $checkout);
         $form->handleRequest($request);
         if ($form->isSubmitted() === true) {
@@ -91,7 +94,7 @@ class CartController extends AbstractController
 
                 return $this->redirectToRoute('default', [], Response::HTTP_FOUND);
             } else {
-                throw new CartNotValidException();
+                $this->addFlash('danger', 'The cart was not set. Check you cart');
             }
         }
 

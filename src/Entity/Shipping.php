@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Repository\ShippingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ShippingRepository::class)
@@ -20,26 +21,36 @@ class Shipping
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Please fill the city")
+     * @Assert\NotNull(message="This field is mandaory")
      * @ORM\Column(type="string", length=255)
      */
     private $city;
 
     /**
+     * @Assert\NotBlank(message="Please fill the Zip code")
+     * @Assert\NotNull(message="This field is mandatory")
      * @ORM\Column(type="string", length=255)
      */
     private $postalCode;
 
     /**
+     * @Assert\NotBlank(message="Please set the address")
+     * @Assert\NotNull(message="This field is mandatory")
      * @ORM\Column(type="text")
      */
     private $address;
 
     /**
+     * @Assert\NotBlank(message="Please fill you first name")
+     * @Assert\NotNull(message="This field is mandarory")
      * @ORM\Column(type="string", length=255)
      */
     private $firstName;
 
     /**
+     * @Assert\NotBlank(message="Please fill you last name")
+     * @Assert\NotNull(message="This field is mandarory")
      * @ORM\Column(type="string", length=255)
      */
     private $lastName;

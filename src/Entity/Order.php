@@ -43,6 +43,7 @@ class Order
     private $status;
 
     /**
+     * @Assert\Valid()
      * @ORM\OneToOne(targetEntity=Shipping::class, cascade={"persist", "remove"})
      */
     private $shipping;
