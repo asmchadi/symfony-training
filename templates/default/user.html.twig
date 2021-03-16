@@ -1,10 +1,21 @@
 {% set items = cart is null ? 0 : cart.orderLines|length %}
 <div class="user">
     <div class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account</a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {{ app.user.username }}
+            {% else %}
+                My Account
+            {% endif %}
+        </a>
+
         <div class="dropdown-menu">
-            <a href="#" class="dropdown-item">Login</a>
-            <a href="#" class="dropdown-item">Register</a>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ url('app_logout') }}" class="dropdown-item">Logout</a>
+            {% else %}
+                <a href="{{ url('app_login') }}" class="dropdown-item">Login</a>
+                <a href="{{ url('app_login') }}" class="dropdown-item">Register</a>
+            {% endif %}
         </div>
     </div>
     <div class="cart">
