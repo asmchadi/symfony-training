@@ -85,6 +85,7 @@ class CartController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() === true) {
             if ($form->isValid() === true) {
+                $checkout->setUser($this->getUser());
                 $cart->updateCart($checkout);
                 $cart->saveToDatabase();
                 $this->addFlash(
