@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+{% block title %}Log in!{% endblock %}
+{% block body %}
+    <div class="login">
+        <div class="container">
+            <div class="section-header">
+                <h3>User Registration & Login</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra at massa sit amet ultricies.
+                    Nullam consequat, mauris non interdum cursus
+                </p>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="login-form">
+                        <form method="post">
+                            {% if error %}
+                                <div class="alert alert-danger">
+                                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                                </div>
+                            {% endif %}
+                            {% if app.user %}
+                                <div class="mb-3">
+                                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="inputEmail">Email</label>
+                                    <input type="email"
+                                           value="{{ last_username }}"
+                                           name="email"
+                                           id="inputEmail"
+                                           class="form-control"
+                                           required
+                                           autofocus/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputPassword">Password</label>
+                                    <input type="password"
+                                           name="password"
+                                           id="inputPassword"
+                                           class="form-control"
+                                           required />
+                                </div>
+
+{#<div class="col-md-12">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="newaccount">
+        <label class="custom-control-label" for="newaccount">Keep me signed in</label>
+    </div>
+</div>
+
+Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+See https://symfony.com/doc/current/security/remember_me.html
+
+<div class="checkbox mb-3">
+    <label>
+        <input type="checkbox" name="_remember_me"> Remember me
+    </label>
+</div>#}
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+                                <div class="col-md-12">
+                                    <button class="btn">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="register-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>First Name</label>
+                                <input class="form-control" type="text" placeholder="First Name">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Last Name"</label>
+                                <input class="form-control" type="text" placeholder="Last Name">
+                            </div>
+                            <div class="col-md-6">
+                                <label>E-mail</label>
+                                <input class="form-control" type="text" placeholder="E-mail">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Mobile No</label>
+                                <input class="form-control" type="text" placeholder="Mobile No">
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login End -->
+{% endblock %}
