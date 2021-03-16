@@ -48,3 +48,7 @@ services:
 
 #    App\Command\OrderCommand:
 #        tags: ['console.command']
+
+    App\EventListener\OrderListener:
+        tags:
+            - {name: kernel.event_listener, event: !php/const App\Event\CartPlacedEvent::NAME}

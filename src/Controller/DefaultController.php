@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Order;
+use App\Event\CartPlacedEvent;
 use App\Form\ContactType;
 use App\Model\Contact;
 use App\Repository\CategoryRepository;
@@ -11,6 +13,7 @@ use App\Repository\ProductRepository;
 use App\Service\Cart;
 use App\Service\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

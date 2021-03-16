@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Event\CartPlacedEvent;
 use App\Exception\CartNotValidException;
 use App\Form\CartType;
 use App\Form\CheckoutType;
 use App\Service\Cart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,14 +70,14 @@ class CartController extends AbstractController
      *
      * @Route("/checkout", name="checkout")
      *
-     * @param Cart    $cart    The cart service
-     * @param Request $request The request object
+     * @param Cart                     $cart       The cart service
+     * @param Request                  $request    The request object
+     * @param EventDispatcherInterface $dispatcher The event dispatcher instance
      *
      * @return Response the response instance
      *
-     * @throws CartNotValidException
      */
-    public function checkout(Cart $cart, Request $request): Response
+    public function checkout(Cart $cart, Request $request, EventDispatcherInterface $dispatcher): Response
     {
         $checkout = $cart->getCart();
         if (null === $checkout) {
@@ -92,6 +94,10 @@ class CartController extends AbstractController
                     'success',
                     'Thanks for using our website. Your cart has been submitted.'
                 );
+                // The event to be dispatched
+                $event = new CartPlacedEvent($checkout);
+                // When the event is dispatched, an email is sent to admin
+                $dispatcher->dispatch($event, CartPlacedEvent::NAME);
 
                 return $this->redirectToRoute('default', [], Response::HTTP_FOUND);
             } else {

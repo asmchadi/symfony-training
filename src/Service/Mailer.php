@@ -90,4 +90,42 @@ class Mailer
 
         $this->mailer->send($message);
     }
+
+    /**
+     * This function is exactly the same as sendMail(). The only purpose of this function
+     * is to be called when the event order.placed is fired.
+     *
+     * @param Order $order the placed order
+     */
+    public function notifyAdmin(Order $order)
+    {
+        try {
+            $message = (new \Swift_Message(\sprintf(
+                'An order placed by %s',
+                $order->getUser()->getUsername()
+            )))
+                ->setFrom($this->from)
+                ->setTo($order->getShipping()->getEmail())
+                ->setBody(
+                    $this->twig->render(
+                        'email/cart_placed.html.twig',
+                        ['cart' => $order]
+                    ),
+                    'text/html'
+                )/*->addPart(
+                    $this->renderView(
+                    // templates/emails/registration.txt.twig
+                        'emails/registration.txt.twig',
+                        ['name' => $name]
+                    ),
+                    'text/plain'
+                )*/
+            ;
+
+            $this->mailer->send($message);
+            dump('A mail has been sent to admin via an event dispatching process.');
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 }
